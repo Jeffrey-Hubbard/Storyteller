@@ -7,10 +7,11 @@ using Storyteller.Models;
 
 namespace Storyteller.DAL
 {
-    public class StorytellerInitializer : System.Data.Entity.DropCreateDatabaseIfModelChanges<StorytellerContext>
+    public class StorytellerInitializer : System.Data.Entity.DropCreateDatabaseAlways<StorytellerContext>
     {
         protected override void Seed(StorytellerContext context)
         {
+
 
             var artifacts = new List<Artifact>
             {
@@ -21,11 +22,18 @@ namespace Storyteller.DAL
             artifacts.ForEach(a => context.Artifacts.Add(a));
             context.SaveChanges();
 
-            var characters = new List<Character>
+            var PCs = new List<PC>
             {
                 new PC {Name="Sleegoth", Class="Warrior", Level=9, Race="Human"},
                 new PC {Name="Karl", Class="Thief", Level=7, Race="Orc"},
-                new PC {Name="Lundrec Brighthelm", Race="Human", Class="Rogue"},
+                new PC {Name="Lundrec Brighthelm", Race="Human", Class="Rogue"}
+            };
+
+            PCs.ForEach(c => context.PCs.Add(c));
+            context.SaveChanges();
+
+            var Enemies = new List<Enemy>
+            {
                 new Enemy {Name="Yap Klortho", Title="Baron", Race="Human", EnemyType=EnemyType.Archenemy},
                 new Enemy {Name="Ragefist", Race="Abomination", EnemyType=EnemyType.Henchman},
                 new Enemy {Name="Vardy", Class="Death Knight", EnemyType=EnemyType.Henchman, Race="Tiefling"},
@@ -36,24 +44,9 @@ namespace Storyteller.DAL
                 new Enemy {Name="Wildfire Ridge", EnemyType=EnemyType.Environment},
                 new Enemy {Name="NakNak", Race="Goblin", EnemyType=EnemyType.Social, Title="Insurgent"},
                 new Enemy {Name="Cavern Collapse", EnemyType=EnemyType.Environment}
-
             };
 
-            characters.ForEach(c => context.Characters.Add(c));
-            context.SaveChanges();
-
-            var clues = new List<Clue>
-            {
-                new Clue {Description="A letter to the enemy from an unnamed author that references", HowToFind="DC:12 Investigation", SceneID=11 },
-                new Clue {Description="A signet ring of an old noble house.", HowToFind="Simple search"},
-                new Clue {Description="A map leading to", HowToFind="Simple search", SceneID=3},
-                new Clue {Description="Coded, hand-written message.", HowToFind="DC:10 Knowledge to decode", SceneID=4},
-                new Clue {Description="Box of supplies labled with shipping company name.", HowToFind="DC:12 Perception", SceneID=5},
-                new Clue {Description="A rough drawing of the nearby town.", HowToFind="Simple search", SceneID=8}
-
-            };
-
-            clues.ForEach(c => context.Clues.Add(c));
+            Enemies.ForEach(e => context.Enemies.Add(e));
             context.SaveChanges();
 
             var locations = new List<Location>
@@ -83,27 +76,80 @@ namespace Storyteller.DAL
             questions.ForEach(q => context.Questions.Add(q));
             context.SaveChanges();
 
+            var clues = new List<Clue>
+            {
+                new Clue {Description="A letter to the enemy from an unnamed author that references", HowToFind="DC:12 Investigation" },
+                new Clue {Description="A signet ring of an old noble house.", HowToFind="Simple search"},
+                new Clue {Description="A map leading to", HowToFind="Simple search"},
+                new Clue {Description="Coded, hand-written message.", HowToFind="DC:10 Knowledge to decode"},
+                new Clue {Description="Box of supplies labled with shipping company name.", HowToFind="DC:12 Perception"},
+                new Clue {Description="A rough drawing of the nearby town.", HowToFind="Simple search"}
+
+            };
+
+            clues.ForEach(c => context.Clues.Add(c));
+            context.SaveChanges();
+
             var scenes = new List<Scene>
             {
-                new Hook { LocationID=2, QuestionID=3 },
-                new CallToAdventure {LocationID=4, QuestionID=2, Clues={clues[3], clues[4], clues[5] }, EnemyID=4 },
-                new Quest {LocationID=3, Type=QuestType.combat, EnemyID=9, QuestionID=5, Clues={clues[4], clues[5], clues[6] } },
-                new Quest {LocationID=3, Type=QuestType.environmental, EnemyID=13, QuestionID=5, Clues={ clues[3], clues[5], clues[6]} },
-                new Quest {LocationID=7, Type=QuestType.social, EnemyID=12, QuestionID=6, Clues={ clues[3], clues[5], clues[6]} },
-                new VillainScene {LocationID=2, Type=QuestType.combat, EnemyID=4},
-                new VillainScene {LocationID=2, Type=QuestType.puzzle, EnemyID=4},
-                new Quest {Type=QuestType.combat, EnemyID=5},
-                new VillainScene {Type=QuestType.combat, EnemyID=6},
-                new VillainScene {Type=QuestType.social, EnemyID=10},
-                new Quest {Type=QuestType.combat, EnemyID=7},
-                new VillainScene {Type=QuestType.combat, EnemyID=8},
-                new VillainScene {Type=QuestType.social, EnemyID=},
-                new FinalBattle {Type=QuestType.combat, EnemyID=4}
+                new Hook { LocationID=2, QuestionID=3, EnemyID=2 },
+                new CallToAdventure {LocationID=4, QuestionID=2, EnemyID=4 },
+                new Quest {LocationID=3, Type=QuestType.combat, EnemyID=9, QuestionID=5 },
+                new Quest {LocationID=3, Type=QuestType.environmental, EnemyID=13, QuestionID=5 },
+                new Quest {LocationID=7, Type=QuestType.social, EnemyID=12, QuestionID=6 },
+                new VillainScene {LocationID=2, Type=QuestType.combat, EnemyID=4, QuestionID=6},
+                new VillainScene {LocationID=2, Type=QuestType.puzzle, EnemyID=4, QuestionID=6},
+                new Quest {LocationID=2, Type=QuestType.combat, EnemyID=5, QuestionID=6},
+                new VillainScene {LocationID=2, Type=QuestType.combat, EnemyID=6, QuestionID=6},
+                new VillainScene {LocationID=2, Type=QuestType.social, EnemyID=10, QuestionID=6},
+                new Quest {LocationID=2, Type=QuestType.combat, EnemyID=7, QuestionID=6},
+                new VillainScene {LocationID=2, Type=QuestType.combat, EnemyID=8, QuestionID=6},
+                new VillainScene {LocationID=2, Type=QuestType.social, EnemyID=7, QuestionID=6},
+                new FinalBattle {LocationID=2, Type=QuestType.combat, EnemyID=4, QuestionID=6}
 
             };
 
             scenes.ForEach(s => context.Scenes.Add(s));
             context.SaveChanges();
+
+            //var adventure = new Adventure
+            //{
+            //    Name = "The Swamps of Briarthorn",
+            //    Premise = questions[0] as Premise,
+            //    Hook = scenes[0] as Hook,
+            //    CallToAdventure = scenes[1] as CallToAdventure,
+            //    FirstQuest = {scenes[2] as Quest, scenes[3] as Quest, scenes[4] as Quest},
+            //    VillainStrikesBack = { scenes[5] as VillainScene, scenes[6] as VillainScene},
+            //    SecondQuest = { scenes[2] as Quest, scenes[3] as Quest, scenes[4] as Quest, scenes[7] as Quest },
+            //    VillainsRevenge = { scenes[8] as VillainScene, scenes[9] as VillainScene },
+            //    ThirdQuest = { scenes[2] as Quest, scenes[3] as Quest, scenes[4] as Quest, scenes[7] as Quest, scenes[10] as Quest },
+            //    DarknessBeforeDawn = { scenes[11] as VillainScene, scenes[12] as VillainScene },
+            //    FinalBattle = scenes[13] as FinalBattle
+            //};
+
+            //for (int x = 0; x < 3; x++)
+            //{
+            //    adventure.PCs.Add(PCs[x]);
+            //}
+            //for (int x = 0; x < 9; x++)
+            //{
+            //    adventure.Enemies.Add(Enemies[x]);
+            //}
+            //for (int x = 0; x < 2; x++)
+            //{
+            //    adventure.Artifacts.Add(artifacts[x]);
+            //}
+            //for (int x = 0; x < 7; x++)
+            //{
+            //    adventure.Locations.Add(locations[x]);
+            //}
+
+            //context.Adventures.Add(adventure);
+            //context.SaveChanges();
+
+            base.Seed(context);
         }
+
+
     }
 }

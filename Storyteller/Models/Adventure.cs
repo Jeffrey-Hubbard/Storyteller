@@ -12,19 +12,19 @@ namespace Storyteller.Models
         public Premise Premise { get; set; }
         public ICollection<Tag> Tags { get; set; }
 
-        public virtual ICollection<PC> Party { get; set; }
+        public virtual ICollection<PC> PCs { get; set; }
         public virtual ICollection<NPC> NPCs { get; set; }
-        public virtual ICollection<Enemy> Antagonists { get; set; }
+        public virtual ICollection<Enemy> Enemies { get; set; }
         public virtual ICollection<Artifact> Artifacts { get; set; }
         public virtual ICollection<Location> Locations { get; set; }
 
         public Hook Hook { get; set; }
 
-        public ICollection<CallToAdventure> CallToAdventure { get; set; }
+        public CallToAdventure CallToAdventure { get; set; }
 
         public ICollection<Quest> FirstQuest { get; set; }
 
-        public ICollection<VillainScene> VillianRetaliates { get; set; }
+        public ICollection<VillainScene> VillainStrikesBack { get; set; }
 
         public ICollection<Quest> SecondQuest { get; set; }
 
@@ -34,7 +34,7 @@ namespace Storyteller.Models
 
         public ICollection<VillainScene> DarknessBeforeDawn { get; set; }
 
-        public ICollection<FinalBattle> FinalBattle { get; set; }
+        public FinalBattle FinalBattle { get; set; }
 
     }
 }

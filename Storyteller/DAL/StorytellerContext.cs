@@ -12,12 +12,14 @@ namespace Storyteller.DAL
     {
         public StorytellerContext() : base("StorytellerContext")
         {
-
+            Database.SetInitializer<StorytellerContext>(new DropCreateDatabaseAlways<StorytellerContext>());
         }
 
         public DbSet<Adventure> Adventures { get; set; }
         public DbSet<Artifact> Artifacts { get; set; }
-        public DbSet<Character> Characters { get; set; }
+        public DbSet<PC> PCs { get; set; }
+        public DbSet<NPC> NPCs { get; set; }
+        public DbSet<Enemy> Enemies { get; set; }
         public DbSet<Clue> Clues { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Question> Questions { get; set; }
@@ -28,10 +30,6 @@ namespace Storyteller.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Character>()
-                .Map<PC>(m => m.Requires("Discriminator").HasValue("PC"))
-                .Map<NPC>(m => m.Requires("Discriminator").HasValue("NPC"))
-                .Map<Enemy>(m => m.Requires("Discriminator").HasValue("Enemy"));
 
             modelBuilder.Entity<Question>()
                 .Map<Premise>(m => m.Requires("Discriminator").HasValue("Premise"));

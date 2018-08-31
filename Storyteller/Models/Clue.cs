@@ -10,6 +10,6 @@ namespace Storyteller.Models
         public int ID { get; set; }
         public string Description { get; set; }
         public string HowToFind { get; set; }
-        public int SceneID { get; set; }
+        //public int SceneID { get; set; }
     }
 }
