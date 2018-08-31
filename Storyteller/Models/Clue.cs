@@ -5,13 +5,11 @@ using System.Web;
 
 namespace Storyteller.Models
 {
-    public class Location
+    public class Clue
     {
         public int ID { get; set; }
-        public string Name { get; set; }
         public string Description { get; set; }
-        public string Effects { get; set; }
-        public ICollection<Tag> Tags { get; set; }
-
+        public string HowToFind { get; set; }
+        public int SceneID { get; set; }
     }
 }

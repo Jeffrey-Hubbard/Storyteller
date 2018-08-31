@@ -13,5 +13,6 @@ namespace Storyteller.Models
         public Character Owner { get; set; }
         public string Description { get; set; }
         public string Powers { get; set; }
+        public ICollection<Tag> Tags { get; set; }
     }
 }

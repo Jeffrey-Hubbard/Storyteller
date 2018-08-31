@@ -8,6 +8,7 @@ namespace Storyteller.Models
     public class PC : Character
     {
         public int Level { get; set; }
+        public string Player { get; set; }
 
         public ICollection<Artifact> Artifacts { get; set; }
         public ICollection<Subplot> Subplots { get; set; }

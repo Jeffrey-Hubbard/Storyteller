@@ -13,5 +13,6 @@ namespace Storyteller.Models
         public Artifact Artifact { get; set; }
         public Enemy Enemy { get; set; }
         public NPC Friend { get; set; }
+        public ICollection<Tag> Tags { get; set; }
     }
 }

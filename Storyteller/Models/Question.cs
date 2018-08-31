@@ -9,7 +9,7 @@ namespace Storyteller.Models
     {
         public int ID { get; set; }
         public string Need { get; set; }
-        public Enemy Opposition { get; set; }
         public string WhatsAtStake { get; set; }
+        public ICollection<Tag> Tags { get; set; }
     }
 }

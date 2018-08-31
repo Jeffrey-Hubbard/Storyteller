@@ -18,10 +18,13 @@ namespace Storyteller.DAL
         public DbSet<Adventure> Adventures { get; set; }
         public DbSet<Artifact> Artifacts { get; set; }
         public DbSet<Character> Characters { get; set; }
+        public DbSet<Clue> Clues { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Question> Questions { get; set; }
         public DbSet<Scene> Scenes { get; set; }
         public DbSet<Subplot> Subplots { get; set; }
         public DbSet<Tag> Tags { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -31,7 +34,6 @@ namespace Storyteller.DAL
                 .Map<Enemy>(m => m.Requires("Discriminator").HasValue("Enemy"));
 
             modelBuilder.Entity<Question>()
-                .ToTable("Question")
                 .Map<Premise>(m => m.Requires("Discriminator").HasValue("Premise"));
 
             modelBuilder.Entity<Scene>()

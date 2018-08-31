@@ -7,7 +7,7 @@ namespace Storyteller.Models
 {
     public enum EnemyType
     {
-        Archenemy, Villain, Henchman, Minion
+        Archenemy, Villain, Henchman, Minion, Environment, Social
     }
     public class Enemy : Character
     {

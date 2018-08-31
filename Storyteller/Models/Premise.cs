@@ -7,5 +7,6 @@ namespace Storyteller.Models
 {
     public class Premise : Question
     {
+        public int EnemyID { get; set; }
     }
 }

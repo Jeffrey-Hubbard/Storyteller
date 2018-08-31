@@ -208,6 +208,7 @@
     <Compile Include="Models\Artifact.cs" />
     <Compile Include="Models\CallToAdventure.cs" />
     <Compile Include="Models\Character.cs" />
+    <Compile Include="Models\Clue.cs" />
     <Compile Include="Models\Enemy.cs" />
     <Compile Include="Models\FinalBattle.cs" />
     <Compile Include="Models\Hook.cs" />

@@ -10,6 +10,7 @@ namespace Storyteller.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public Premise Premise { get; set; }
+        public ICollection<Tag> Tags { get; set; }
 
         public virtual ICollection<PC> Party { get; set; }
         public virtual ICollection<NPC> NPCs { get; set; }
